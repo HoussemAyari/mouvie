@@ -1,10 +1,12 @@
 import React from "react";
 import FilmCrd from "./FilmCrd";
-import "./List.css";
-
-function List({ films, search, Rate }) {
+import Searchbar from "./Searchbar";
+import { Link } from "react-router-dom";
+function Home({films, Rate, search, searchForFilm, starSearch, setRate, addFilm}) {
   return (
-    <div
+    <div>
+      <Searchbar searchForFilm={searchForFilm} starSearch={starSearch} setRate={setRate}  addFilm={addFilm}/>
+      <div
       style={{
         display: "flex",
         flexDirection: "row",
@@ -17,11 +19,15 @@ function List({ films, search, Rate }) {
       {films.film
         .filter((elt) => elt.title.toUpperCase().includes(search.toUpperCase()) && elt.rate>=Rate)
         .map((elt) => (
-          <FilmCrd key={elt.id} film={elt}  />
+          <Link to={`/details/${elt.id}`}>
+        <FilmCrd key={elt.id} film={elt}  />
+              </Link>
+
         ))}
         
+    </div>
     </div>
   );
 }
 
-export default List;
+export default Home;
